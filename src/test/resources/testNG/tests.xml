@@ -11,4 +11,21 @@
             </class>
         </classes>
     </test>
+    <test name="Add task">
+        <classes>
+            <class name="com.solvd.AddTasksTests">
+                <methods>
+                    <include name="addSimpleTaskTest"/>
+                    <include name="addThreeSimpleTasksInRowTest"/>
+                    <include name="dontAddEmptyTaskTest"/>
+                    <include name="addTaskWithLongTextTest"/>
+                    <include name="addTaskForTodayTest"/>
+                    <include name="addTaskForTodayAtGivenTimeWithDefaultReminder"/>
+                    <include name="addTaskForTomorrowTest"/>
+                    <include name="addTaskForFutureWithPredefinedTimeAndReminderTest"/>
+                    <include name="addTaskWithNoDateTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>
