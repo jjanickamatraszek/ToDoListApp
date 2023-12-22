@@ -75,16 +75,11 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
     }
 
     public TasksPage skipTutorial() {
-        waitUntil(ExpectedConditions.visibilityOf(tasksListContainer.getElement()), 3);
-        Point location = tasksListContainer.getElement().getLocation();
-        Dimension size = tasksListContainer.getElement().getSize();
-        int x = location.getX() + (int) (size.width * 0.8);
-        int y = location.getY() + (int) (size.height * 0.6);
         waitUntil(ExpectedConditions.visibilityOf(editTaskBtn.getElement()), 3);
-        tap(x, y);
+        getDriver().navigate().back();
         waitUntil(ExpectedConditions.visibilityOf(checkTaskRadioBtnGeneral.getElement()), 3);
-        tap(x, y);
-        tap(x, y);
+        getDriver().navigate().back();
+        getDriver().navigate().back();
         return this;
     }
 
