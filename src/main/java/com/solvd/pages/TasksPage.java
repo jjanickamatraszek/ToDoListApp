@@ -14,6 +14,9 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
     @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id, 'task_none')]")
     private ExtendedWebElement createTaskPrompt;
 
+    @FindBy(xpath = ".//androidx.recyclerview.widget.RecyclerView[contains(@resource-id, 'rv_note_list')]")
+    private ExtendedWebElement tasksListContainer;
+
     @FindBy(xpath = ".//android.widget.ImageView[contains(@resource-id, 'task_add')]")
     private ExtendedWebElement addTaskBtn;
 
@@ -72,11 +75,16 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
     }
 
     public TasksPage skipTutorial() {
+        waitUntil(ExpectedConditions.visibilityOf(tasksListContainer.getElement()), 3);
+        Point location = tasksListContainer.getElement().getLocation();
+        Dimension size = tasksListContainer.getElement().getSize();
+        int x = location.getX() + (int) (size.width * 0.8);
+        int y = location.getY() + (int) (size.height * 0.6);
         waitUntil(ExpectedConditions.visibilityOf(editTaskBtn.getElement()), 3);
-        tap(1175, 1446);
+        tap(x, y);
         waitUntil(ExpectedConditions.visibilityOf(checkTaskRadioBtnGeneral.getElement()), 3);
-        tap(1175, 1446);
-        tap(1175, 1446);
+        tap(x, y);
+        tap(x, y);
         return this;
     }
 
