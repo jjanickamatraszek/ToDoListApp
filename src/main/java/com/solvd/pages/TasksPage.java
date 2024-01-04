@@ -64,7 +64,6 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
     }
 
     public TasksPage inputTaskDesc(String taskText) {
-        waitUntil(ExpectedConditions.visibilityOf(inputNewTaskTextField.getElement()), 3);
         inputNewTaskTextField.type(taskText);
         return this;
     }
@@ -94,15 +93,12 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
     }
 
     public TasksPage clickDeleteTaskBtn() {
-        waitUntil(ExpectedConditions.invisibilityOf(deleteTaskBtn.getElement()), 3);
         deleteTaskBtn.click();
         return this;
     }
 
     public TasksPage confirmDeleteTask() {
-        waitUntil(ExpectedConditions.visibilityOf(deleteTaskPopup.getElement()), 3);
         deleteTaskConfirmBtn.click();
-        waitUntil(ExpectedConditions.invisibilityOf(deleteTaskPopup.getElement()), 3);
         return this;
     }
 }
