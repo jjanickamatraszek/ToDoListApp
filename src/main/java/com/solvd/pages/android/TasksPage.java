@@ -1,15 +1,16 @@
-package com.solvd.pages;
+package com.solvd.pages.android;
 
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.solvd.pages.base.TasksPageBase;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class TasksPage extends AbstractPage implements IMobileUtils {
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = TasksPageBase.class)
+public class TasksPage extends TasksPageBase {
 
     @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id, 'task_none')]")
     private ExtendedWebElement createTaskPrompt;
@@ -54,26 +55,31 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
         super(driver);
     }
 
+    @Override
     public boolean isCreateTaskPromptVisible() {
         return createTaskPrompt.isVisible(3);
     }
 
-    public TasksPage clickAddTaskBtn() {
+    @Override
+    public TasksPageBase clickAddTaskBtn() {
         addTaskBtn.click();
         return this;
     }
 
-    public TasksPage inputTaskDesc(String taskText) {
+    @Override
+    public TasksPageBase inputTaskDesc(String taskText) {
         inputNewTaskTextField.type(taskText);
         return this;
     }
 
-    public TasksPage clickAddTaskConfirmBtn() {
+    @Override
+    public TasksPageBase clickAddTaskConfirmBtn() {
         addTaskConfirmBtn.click();
         return this;
     }
 
-    public TasksPage skipTutorial() {
+    @Override
+    public TasksPageBase skipTutorial() {
         waitUntil(ExpectedConditions.visibilityOf(editTaskBtn.getElement()), 3);
         getDriver().navigate().back();
         waitUntil(ExpectedConditions.visibilityOf(checkTaskRadioBtnGeneral.getElement()), 3);
@@ -82,7 +88,8 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
         return this;
     }
 
-    public TasksPage swipeLeftOnTask(String taskText) {
+    @Override
+    public TasksPageBase swipeLeftOnTask(String taskText) {
         Point location = taskContainer.format(taskText).getElement().getLocation();
         Dimension size = taskContainer.format(taskText).getElement().getSize();
         int xStart = location.getX() + (int) (size.width * 0.8);
@@ -92,12 +99,14 @@ public class TasksPage extends AbstractPage implements IMobileUtils {
         return this;
     }
 
-    public TasksPage clickDeleteTaskBtn() {
+    @Override
+    public TasksPageBase clickDeleteTaskBtn() {
         deleteTaskBtn.click();
         return this;
     }
 
-    public TasksPage confirmDeleteTask() {
+    @Override
+    public TasksPageBase confirmDeleteTask() {
         deleteTaskConfirmBtn.click();
         return this;
     }
