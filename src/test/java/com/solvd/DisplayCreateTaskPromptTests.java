@@ -21,9 +21,9 @@ public class DisplayCreateTaskPromptTests extends ToDoListBaseTest {
         String taskText = "my task";
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
         tasksPage.clickAddTaskBtn()
-                .inputTaskDesc(taskText)
-                .clickAddTaskConfirmBtn()
-                .skipTutorial();
+                .inputTaskText(taskText)
+                .clickAddTaskConfirmBtn();
+        tasksPage.skipTutorial();
 
         tasksPage.swipeLeftOnTask(taskText)
                 .clickDeleteTaskBtn()
