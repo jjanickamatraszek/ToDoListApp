@@ -1,6 +1,7 @@
 package com.solvd.pages.android;
 
 import com.solvd.consts.FlagColor;
+import com.solvd.consts.TaskCategory;
 import com.solvd.pages.base.InputTaskPageBase;
 import com.solvd.pages.base.TaskDateSettingsPageBase;
 import com.solvd.pages.base.TaskPageBase;
@@ -81,9 +82,14 @@ public class TasksPage extends TasksPageBase {
     @FindBy(xpath = ".//android.widget.FrameLayout[contains(@resource-id, 'custom')]")
     private ExtendedWebElement reminderPopup;
 
+    @FindBy(xpath = ".//androidx.recyclerview.widget.RecyclerView[contains(@resource-id,'category_layout')]")
+    private ExtendedWebElement taskCategoryContainer;
+
+    @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id,'category_text') and @text = '%s']")
+    private ExtendedWebElement taskCategoryLabelFormatted;
+
     public TasksPage(WebDriver driver) {
         super(driver);
-        pageUtils = new PageUtils();
     }
 
     @Override
@@ -219,5 +225,24 @@ public class TasksPage extends TasksPageBase {
             getDriver().navigate().back();
         }
         return this;
+    }
+
+    @Override
+    public TasksPageBase clickTaskCategoryLabel(TaskCategory taskCategory) {
+        if (taskCategory.equals(TaskCategory.DEFAULT)) {
+            throw new IllegalArgumentException(TaskCategory.DEFAULT.getName() + "is not displayed on tasks screen");
+        }
+        PageUtils.clickIfNotSelected(taskCategoryLabelFormatted.format(taskCategory.getName()));
+        return this;
+    }
+
+    @Override
+    public boolean swipeToTaskCategory(String customizedTaskCategory, Direction direction) {
+        return swipe(taskCategoryLabelFormatted.format(customizedTaskCategory), taskCategoryContainer, direction, 10);
+    }
+
+    @Override
+    public void clickCustomizedTaskCategory(String customizedTaskCategory) {
+        taskCategoryLabelFormatted.format(customizedTaskCategory).click();
     }
 }
