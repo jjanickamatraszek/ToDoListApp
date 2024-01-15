@@ -14,14 +14,8 @@ public class TaskTimeSettingPage extends TaskTimeSettingPageBase {
     @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id, 'dialog_time_confirm')]")
     private ExtendedWebElement doneBtn;
 
-    @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id,'time_7')]")
-    private ExtendedWebElement am7Btn;
-
-    @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id,'time_10')]")
-    private ExtendedWebElement am10Btn;
-
-    @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id,'time_16')]")
-    private ExtendedWebElement pm04Btn;
+    @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id,'time_%d')]")
+    private ExtendedWebElement hourBtnFormatted;
 
     public TaskTimeSettingPage(WebDriver driver) {
         super(driver);
@@ -29,18 +23,7 @@ public class TaskTimeSettingPage extends TaskTimeSettingPageBase {
 
     @Override
     public TaskTimeSettingPage selectPredefinedTime(TaskPredefinedTime time) {
-        switch (time) {
-
-            case AM7 -> {
-                am7Btn.click();
-            }
-            case AM10 -> {
-                am10Btn.click();
-            }
-            case PM4 -> {
-                pm04Btn.click();
-            }
-        }
+        hourBtnFormatted.format(time.getHourByNumber()).click();
         return this;
     }
 

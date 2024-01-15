@@ -20,17 +20,8 @@ public class ReminderPage extends ReminderPageBase {
     @FindBy(xpath = ".//androidx.recyclerview.widget.RecyclerView[contains(@resource-id,'popup_rv')]")
     private ExtendedWebElement reminderTimePopup;
 
-    @FindBy(xpath = ".//android.widget.CheckBox[contains(@resource-id,'dialog_item_check') and @text='5 minutes before']")
-    private ExtendedWebElement min5beforeCheckBox;
-
-    @FindBy(xpath = ".//android.widget.CheckBox[contains(@resource-id,'dialog_item_check') and @text='10 minutes before']")
-    private ExtendedWebElement min10beforeCheckBox;
-
-    @FindBy(xpath = ".//android.widget.CheckBox[contains(@resource-id,'dialog_item_check') and @text='15 minutes before']")
-    private ExtendedWebElement min15beforeCheckBox;
-
-    @FindBy(xpath = ".//android.widget.CheckBox[contains(@resource-id,'dialog_item_check') and @text='30 minutes before']")
-    private ExtendedWebElement min30beforeCheckBox;
+    @FindBy(xpath = ".//android.widget.CheckBox[contains(@resource-id,'dialog_item_check') and @text='%s']")
+    private ExtendedWebElement reminderValueCheckboxFormatted;
 
     @FindBy(xpath = ".//android.widget.TextView[contains(@resource-id,'dialog_confirm')]")
     private ExtendedWebElement doneBtn;
@@ -50,20 +41,7 @@ public class ReminderPage extends ReminderPageBase {
 
     @Override
     public ReminderPageBase selectReminderValue(ReminderValue value) {
-        switch (value) {
-            case MIN_5_BEFORE -> {
-                min5beforeCheckBox.click();
-            }
-            case MIN_10_BEFORE -> {
-                min10beforeCheckBox.click();
-            }
-            case MIN_15_BEFORE -> {
-                min15beforeCheckBox.click();
-            }
-            case MIN_30_BEFORE -> {
-                min30beforeCheckBox.click();
-            }
-        }
+        reminderValueCheckboxFormatted.format(value.getDesc()).click();
         return this;
     }
 

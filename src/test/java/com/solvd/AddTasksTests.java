@@ -1,7 +1,6 @@
 package com.solvd;
 
 import com.solvd.consts.*;
-import com.solvd.dataProviders.DataProviderForTests;
 import com.solvd.pages.base.InputTaskPageBase;
 import com.solvd.pages.base.TaskDateSettingsPageBase;
 import com.solvd.pages.base.TaskPageBase;
@@ -9,6 +8,7 @@ import com.solvd.pages.base.TasksPageBase;
 import com.solvd.utils.TimeDateUtils;
 import com.zebrunner.agent.core.annotation.TestCaseKey;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
@@ -16,13 +16,22 @@ import java.util.List;
 
 public class AddTasksTests extends ToDoListBaseTest {
 
+    @DataProvider
+    public Object[][] predefinedTaskTimeDateAndReminders() {
+        return new Object[][]{
+                {TaskPredefinedDay.TOMORROW, LocalDate.now().plusDays(1), TaskPredefinedTime.AM10, ReminderValue.MIN_10_BEFORE},
+                {TaskPredefinedDay.THREE_DAY_LATER, LocalDate.now().plusDays(3), TaskPredefinedTime.AM7, ReminderValue.MIN_15_BEFORE},
+                {TaskPredefinedDay.THIS_SUNDAY, TimeDateUtils.getThisSundayLocalDate(LocalDate.now()), TaskPredefinedTime.PM4, ReminderValue.MIN_30_BEFORE}
+        };
+    }
+
     @Test
     @TestCaseKey(value = "JOANNA-48")
     public void addSimpleTaskTest() {
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText)
-                .clickAddTaskConfirmBtn();
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
+        inputTaskPage.clickAddTaskConfirmBtn();
         tasksPage.skipTutorial();
         Assert.assertTrue(tasksPage.areTasksDisplayedOnTodayList(List.of(expectedTaskText)),
                 "Task '%s' isn't displayed on the list for TODAY".formatted(expectedTaskText));
@@ -59,17 +68,17 @@ public class AddTasksTests extends ToDoListBaseTest {
         int expectedTaskAmount = 4;
 
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText)
-                .clickAddTaskConfirmBtn();
-        tasksPage.skipTutorial();
         InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
-        inputTaskPage.inputTaskText(tasksToAddInRow.get(0))
-                .clickAddTaskConfirmBtn();
-        inputTaskPage.inputTaskText(tasksToAddInRow.get(1))
-                .clickAddTaskConfirmBtn();
-        inputTaskPage.inputTaskText(tasksToAddInRow.get(2))
-                .clickAddTaskConfirmBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
+        inputTaskPage.clickAddTaskConfirmBtn();
+        tasksPage.skipTutorial()
+                .clickAddTaskBtn()
+                .inputTaskText(tasksToAddInRow.get(0));
+        inputTaskPage.clickAddTaskConfirmBtn();
+        inputTaskPage.inputTaskText(tasksToAddInRow.get(1));
+        inputTaskPage.clickAddTaskConfirmBtn();
+        inputTaskPage.inputTaskText(tasksToAddInRow.get(2));
+        inputTaskPage.clickAddTaskConfirmBtn();
         inputTaskPage.leaveInputTaskMode()
                 .skipRateApp();
         Assert.assertEquals(tasksPage.getNumberOfTodayTasksListed(), expectedTaskAmount,
@@ -82,9 +91,9 @@ public class AddTasksTests extends ToDoListBaseTest {
     @TestCaseKey(value = "JOANNA-50")
     public void dontAddEmptyTaskTest() {
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        tasksPage.clickAddTaskBtn()
-                .inputTaskText("")
-                .clickAddTaskConfirmBtn();
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText("");
+        inputTaskPage.clickAddTaskConfirmBtn();
         Assert.assertTrue(tasksPage.isEmptyTaskWarningDisplayed(),
                 "Warning message wasn't displayed");
         Assert.assertEquals(tasksPage.getNumberOfTodayTasksListed(), 0,
@@ -97,9 +106,9 @@ public class AddTasksTests extends ToDoListBaseTest {
         expectedTaskText = "aaaaaaaaaaBBBBBBBBBBccccccccccDDDDDDDDDDeeeeeeeeeeee";
 
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText)
-                .clickAddTaskConfirmBtn();
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
+        inputTaskPage.clickAddTaskConfirmBtn();
         tasksPage.skipTutorial();
         Assert.assertTrue(tasksPage.isTaskTextTrimmedForLongDesc(expectedTaskText),
                 "Task text isn't correctly trimmed or task isn't displayed on the tasks list");
@@ -115,8 +124,8 @@ public class AddTasksTests extends ToDoListBaseTest {
         LocalDate today = LocalDate.now();
 
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText);
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
         inputTaskPage.clickSelectDateBtn()
                 .selectDay(TaskPredefinedDay.TODAY)
                 .clickDoneBtn();
@@ -138,8 +147,8 @@ public class AddTasksTests extends ToDoListBaseTest {
         TaskPredefinedTime expectedTaskTime = TaskPredefinedTime.AM7;
 
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText);
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
         TaskDateSettingsPageBase taskDateSettingsPage = inputTaskPage.clickSelectDateBtn();
         taskDateSettingsPage.clickTimeSettingBtn()
                 .selectPredefinedTime(expectedTaskTime)
@@ -171,8 +180,8 @@ public class AddTasksTests extends ToDoListBaseTest {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
 
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText);
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
         inputTaskPage.clickSelectDateBtn()
                 .selectDay(TaskPredefinedDay.TOMORROW)
                 .clickDoneBtn();
@@ -188,12 +197,12 @@ public class AddTasksTests extends ToDoListBaseTest {
                 "Task due date on task screen is different than expected");
     }
 
-    @Test(dataProvider = "predefinedTaskTimeDateAndReminders", dataProviderClass = DataProviderForTests.class)
+    @Test(dataProvider = "predefinedTaskTimeDateAndReminders")
     @TestCaseKey(value = "JOANNA-55")
     public void addTaskForFutureWithPredefinedTimeAndReminderTest(TaskPredefinedDay expectedDay, LocalDate expectedDate, TaskPredefinedTime expectedTime, ReminderValue reminderValue) {
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText);
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
         TaskDateSettingsPageBase taskDateSettingsPage = inputTaskPage.clickSelectDateBtn()
                 .selectDay(expectedDay)
                 .clickTimeSettingBtn()
@@ -232,8 +241,8 @@ public class AddTasksTests extends ToDoListBaseTest {
     @TestCaseKey(value = "JOANNA-56")
     public void addTaskWithNoDateTest() {
         TasksPageBase tasksPage = pageUtils.goToTaskPage();
-        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn()
-                .inputTaskText(expectedTaskText);
+        InputTaskPageBase inputTaskPage = tasksPage.clickAddTaskBtn();
+        inputTaskPage.inputTaskText(expectedTaskText);
         inputTaskPage.clickSelectDateBtn()
                 .clickNoDateBtn()
                 .clickDoneBtn();

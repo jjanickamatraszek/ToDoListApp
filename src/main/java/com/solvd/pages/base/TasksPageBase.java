@@ -1,13 +1,11 @@
 package com.solvd.pages.base;
 
 import com.solvd.consts.FlagColor;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public abstract class TasksPageBase extends AbstractPage implements IMobileUtils {
+public abstract class TasksPageBase extends BaseToDoListAppBase {
 
     protected TasksPageBase(WebDriver driver) {
         super(driver);

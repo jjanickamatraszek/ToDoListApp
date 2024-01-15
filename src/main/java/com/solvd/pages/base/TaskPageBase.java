@@ -1,10 +1,8 @@
 package com.solvd.pages.base;
 
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
-public abstract class TaskPageBase extends AbstractPage implements IMobileUtils {
+public abstract class TaskPageBase extends BaseToDoListAppBase {
 
     protected TaskPageBase(WebDriver driver) {
         super(driver);

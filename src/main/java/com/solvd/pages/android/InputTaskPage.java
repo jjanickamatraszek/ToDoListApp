@@ -28,9 +28,8 @@ public class InputTaskPage extends InputTaskPageBase {
     }
 
     @Override
-    public InputTaskPageBase inputTaskText(String taskText) {
+    public void inputTaskText(String taskText) {
         inputNewTaskTextField.type(taskText);
-        return this;
     }
 
     @Override

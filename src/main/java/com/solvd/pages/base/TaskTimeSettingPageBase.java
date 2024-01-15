@@ -1,10 +1,9 @@
 package com.solvd.pages.base;
 
 import com.solvd.consts.TaskPredefinedTime;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
-public abstract class TaskTimeSettingPageBase extends AbstractPage {
+public abstract class TaskTimeSettingPageBase extends BaseToDoListAppBase {
 
     protected TaskTimeSettingPageBase(WebDriver driver) {
         super(driver);
