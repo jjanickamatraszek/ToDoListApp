@@ -35,3 +35,4 @@ build/
 .DS_Store
 
 /reports
+/src/main/resources/agent.properties

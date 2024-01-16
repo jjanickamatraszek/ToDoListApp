@@ -1,6 +1,7 @@
 package com.solvd.pages.base;
 
 import com.solvd.consts.FlagColor;
+import com.solvd.consts.TaskCategory;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
@@ -48,4 +49,10 @@ public abstract class TasksPageBase extends BaseToDoListAppBase {
     public abstract String getTaskDate(String taskText);
 
     public abstract TasksPageBase closeReminderPermissionPopup();
+
+    public abstract TasksPageBase clickTaskCategoryLabel(TaskCategory taskCategory);
+
+    public abstract boolean swipeToTaskCategory(String customizedTaskCategory, Direction direction);
+
+    public abstract void clickCustomizedTaskCategory(String customizedTaskCategory);
 }

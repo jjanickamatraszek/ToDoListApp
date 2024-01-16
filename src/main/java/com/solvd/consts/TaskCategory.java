@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum TaskCategory {
     DEFAULT("No Category"),
+    ALL("All"),
     WORK("Work"),
     PERSONAL("Personal"),
     WISHLIST("Wishlist"),
