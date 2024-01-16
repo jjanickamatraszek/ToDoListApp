@@ -81,8 +81,6 @@ public class TasksPage extends TasksPageBase {
     @FindBy(xpath = ".//android.widget.FrameLayout[contains(@resource-id, 'custom')]")
     private ExtendedWebElement reminderPopup;
 
-    private PageUtils pageUtils;
-
     public TasksPage(WebDriver driver) {
         super(driver);
         pageUtils = new PageUtils();
