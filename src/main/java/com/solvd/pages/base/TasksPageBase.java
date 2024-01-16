@@ -1,10 +1,11 @@
 package com.solvd.pages.base;
 
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
+import com.solvd.consts.FlagColor;
 import org.openqa.selenium.WebDriver;
 
-public abstract class TasksPageBase extends AbstractPage implements IMobileUtils {
+import java.util.List;
+
+public abstract class TasksPageBase extends BaseToDoListAppBase {
 
     protected TasksPageBase(WebDriver driver) {
         super(driver);
@@ -12,11 +13,7 @@ public abstract class TasksPageBase extends AbstractPage implements IMobileUtils
 
     public abstract boolean isCreateTaskPromptVisible();
 
-    public abstract TasksPageBase clickAddTaskBtn();
-
-    public abstract TasksPageBase inputTaskDesc(String taskText);
-
-    public abstract TasksPageBase clickAddTaskConfirmBtn();
+    public abstract InputTaskPageBase clickAddTaskBtn();
 
     public abstract TasksPageBase skipTutorial();
 
@@ -25,4 +22,30 @@ public abstract class TasksPageBase extends AbstractPage implements IMobileUtils
     public abstract TasksPageBase clickDeleteTaskBtn();
 
     public abstract TasksPageBase confirmDeleteTask();
+
+    public abstract TaskDateSettingsPageBase clickEditTaskDateBtn();
+
+    public abstract TaskPageBase openTaskByText(String taskText);
+
+    public abstract TaskPageBase openTaskByIndex(int id);
+
+    public abstract int getNumberOfTodayTasksListed();
+
+    public abstract boolean areTasksDisplayedOnTodayList(List<String> tasksTexts);
+
+    public abstract boolean areTasksDisplayedOnFutureList(List<String> tasksTexts);
+
+    public abstract boolean isFlagDisplayed(FlagColor color);
+
+    public abstract TasksPageBase skipRateApp();
+
+    public abstract boolean isEmptyTaskWarningDisplayed();
+
+    public abstract boolean isTaskTextTrimmedForLongDesc(String taskText);
+
+    public abstract boolean isTaskDateVisible(String taskText);
+
+    public abstract String getTaskDate(String taskText);
+
+    public abstract TasksPageBase closeReminderPermissionPopup();
 }

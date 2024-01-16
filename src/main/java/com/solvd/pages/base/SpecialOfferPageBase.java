@@ -1,9 +1,8 @@
 package com.solvd.pages.base;
 
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
-public abstract class SpecialOfferPageBase extends AbstractPage {
+public abstract class SpecialOfferPageBase extends BaseToDoListAppBase {
 
     protected SpecialOfferPageBase(WebDriver driver) {
         super(driver);
